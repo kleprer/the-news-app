@@ -6,7 +6,7 @@ function App() {
   const dispatch = useDispatch();
   const { items, loading, error, hasMore } = useSelector((state) => state.news);
   const observeRef = useRef();
-
+ 
 
   useEffect(() => {
     if (loading || !hasMore) return;
@@ -31,6 +31,9 @@ function App() {
     };
 
   }, [items.length])
+
+
+
 
   return (
     <div className="App">

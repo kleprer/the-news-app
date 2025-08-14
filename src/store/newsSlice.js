@@ -5,10 +5,8 @@ export const fetchNews = createAsyncThunk(
     async (skip, { rejectWithValue }) => {
         try {
             const response = await fetch(`https://dummyjson.com/posts?limit=10&skip=${skip}`);
-            
             if  (!response.ok) throw new Error('Server error!');
             const data = await response.json();
-            console.log(data.posts);
             return data.posts;
         }
         catch (error) {
@@ -32,9 +30,13 @@ const newsSlice = createSlice({
             state.error = null;
         })
         .addCase(fetchNews.fulfilled, (state, action) => {
+            const newItems = action.payload.filter(
+                (newItem) => !state.items.some((existingItem) => existingItem.id === newItem.id)
+            );
+            
+            state.items = [...state.items, ...newItems];
+            state.hasMore = newItems.length > 0;  // Останавливаем загрузку, если новых нет
             state.loading = false;
-            state.items = [...state.items, ...action.payload];
-            state.hasMore = action.payload.length === 10;
         })
         .addCase(fetchNews.rejected, (state, action) => {
             state.loading = false;
