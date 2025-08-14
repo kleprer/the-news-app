@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchNews } from './store/newsSlice';
-import NewsCard from './NewsCard';
-import Header from './Header';
+import NewsCard from './Components/NewsCard';
+import Header from './Components/Header';
 
 function App() {
   const dispatch = useDispatch();

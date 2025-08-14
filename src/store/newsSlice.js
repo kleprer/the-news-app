@@ -35,7 +35,7 @@ const newsSlice = createSlice({
             );
             
             state.items = [...state.items, ...newItems];
-            state.hasMore = newItems.length > 0;  // Останавливаем загрузку, если новых нет
+            state.hasMore = newItems.length > 0;  
             state.loading = false;
         })
         .addCase(fetchNews.rejected, (state, action) => {
