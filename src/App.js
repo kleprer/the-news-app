@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchNews } from './store/newsSlice';
+import NewsCard from './NewsCard';
+import Header from './Header';
 
 function App() {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ function App() {
           dispatch(fetchNews(items.length));
         }
       },
-      { threshold: 1.0 }
+      { threshold: 0.7 }
     );
 
     if (observeRef.current) {
@@ -37,14 +39,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1>News</h1>
+      <Header />
       {items.map((item, index) => (
-        <div key={`${item.id}-${index}`} className="news-item">
-          <h3>{item.title}</h3>
-          <p>{item.body}</p>
-        </div>
+        <NewsCard item = { item } />
       ))}
-      {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       <div ref={observeRef} style={{ height: '10px' }} />
     </div>
